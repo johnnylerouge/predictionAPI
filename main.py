@@ -54,11 +54,12 @@ def preprocess(text):
     text=[word for word in words if not word in stop_words]
     text=' '.join(map(str, text))
     text=token.tokenize(text)
-    lemm_list=[]
-    for word in text:
-        x=lemmatizer.lemmatize(word, pos='v')
-        lemm_list.append(x)
-    text=' '.join(map(str, lemm_list))
+    
+    #lemm_list=[]
+    #for word in text:
+    #    x=lemmatizer.lemmatize(word, pos='v')
+    #    lemm_list.append(x)
+    text=' '.join(map(str, text))
     return text
 
 def tags_normalization(text):
@@ -70,10 +71,6 @@ def tags_normalization(text):
 class Item(BaseModel):
     content : str
     title : str
-
-TITRE = "How to enumerate an enum"
-CONTENU = "How can you enumerate an enum in C#? E.g. the following code does not compile:"
-
 
 @app.get("/")
 def welcome():

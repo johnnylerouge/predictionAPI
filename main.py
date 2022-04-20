@@ -71,14 +71,22 @@ class Item(BaseModel):
     content : str
     title : str
 
+TITRE = "How to enumerate an enum"
+CONTENU = "How can you enumerate an enum in C#? E.g. the following code does not compile:"
+
 
 @app.get("/")
-def tag_predict(Titre : str, Contenu : str, tfidf_X=tfidf_X1, tfidf_Y=tfidf_X2):
-    Titre = "How to enumerate an enum"
-    Contenu = "How can you enumerate an enum in C#? E.g. the following code does not compile:"
+def welcome():
+    return "welcome to tag predictionAPI"
 
-    unseen_data={'Title': preprocess(Titre), 'Body': preprocess(Contenu)}
+
+
+@app.post("/")
+def tag_predict(item:Item):
+    unseen_data={'Title': preprocess(item.title), 'Body': preprocess(item.content)}
     unseen_data=pd.DataFrame(data=unseen_data, index=[0])
+    tfidf_X=tfidf_X1
+    tfidf_Y=tfidf_X2
     tfidf_Y=tfidf_Y.transform(unseen_data.Title)
     tfidf_X=tfidf_X.transform(unseen_data.Body)
     tfidf_unseen=hstack([tfidf_X, tfidf_Y])
